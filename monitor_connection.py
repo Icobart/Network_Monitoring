@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import sys
 import subprocess  # Importa il modulo subprocess per eseguire nuovi processi
 import platform  # Importa il modulo platform per accedere a informazioni sulla piattaforma, come il nome del sistema operativo
 import concurrent.futures  # Importa il modulo concurrent.futures per il supporto del multithreading
