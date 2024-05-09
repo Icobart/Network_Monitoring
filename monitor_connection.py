@@ -1,103 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri May  3 17:19:23 2024
-
-@author: enric
-"""
-"""
-from ping3 import ping, verbose_ping
-
-def ping_host(ip):
-    try:
-        delay = ping(ip)
-        if delay is None:
-            return f"{ip} is offline"
-        else:
-            return f"{ip} is online, ping in {delay} seconds"
-    except OSError as e:
-        return f"Network error: {str(e)}"
-    except TimeoutError:
-        return f"Request to {ip} timed out."
-    except Exception as e:
-        return f"Cannot ping {ip}: {str(e)}"
-
-hosts = input("Enter the IP addresses of the hosts to monitor, separated by commas: ").split(',')
-
-for host in hosts:
-    print(ping_host(host.strip()))
-"""
-"""
-import concurrent.futures
-from ping3 import ping
-def ping_host(ip):
-    try:
-        delay = ping(ip)
-        if delay is None:
-            return f"{ip} is offline"
-        else:
-            return f"{ip} is online, ping in {delay} seconds"
-    except OSError as e:
-        return f"Network error: {str(e)}"
-    except TimeoutError:
-        return f"Request to {ip} timed out."
-    except Exception as e:
-        return f"Cannot ping {ip}: {str(e)}"
-
-hosts = input("Enter the IP addresses of the hosts to monitor, separated by commas: ").split(',')
-
-with concurrent.futures.ThreadPoolExecutor() as executor:
-    futures = {executor.submit(ping_host, host.strip()): host for host in hosts}
-    for future in concurrent.futures.as_completed(futures):
-        host = futures[future]
-        try:
-            print(future.result())
-        except Exception as e:
-            print(f"Cannot ping {host}: {str(e)}")
-"""
-"""
-import os
-import platform
-def ping_host(ip):
-    param = '-n' if platform.system().lower()=='windows' else '-c'
-    command = ['ping', param, '1', ip]
-
-    return os.system(' '.join(command)) == 0
-
-hosts = input("Enter the IP addresses of the hosts to monitor, separated by commas: ").split(',')
-
-for host in hosts:
-    if ping_host(host.strip()):
-        print(f"{host.strip()} is online")
-    else:
-        print(f"{host.strip()} is offline")
-"""
-"""
-import os, sys
-import subprocess
-import platform
-
-def ping_host(ip):
-    param = '-n' if platform.system().lower()=='windows' else '-c'
-    command = ['ping', param, '1', ip]
-
-    try:
-        output = subprocess.check_output(' '.join(command), stderr=subprocess.STDOUT, shell=True)
-        if 'unreachable' in output.decode('utf-8').lower():
-            return False
-        else:
-            return True
-    except Exception as e:
-        print(f"Error pinging {ip}: {str(e)}")
-        return False
-
-hosts = input("Enter the IP addresses of the hosts to monitor, separated by commas: ").split(',')
-
-for host in hosts:
-    if ping_host(host.strip()):
-        print(f"{host.strip()} is online")
-    else:
-        print(f"{host.strip()} is offline")
-"""
 import subprocess  # Importa il modulo subprocess per eseguire nuovi processi
 import platform  # Importa il modulo platform per accedere a informazioni sulla piattaforma, come il nome del sistema operativo
 import concurrent.futures  # Importa il modulo concurrent.futures per il supporto del multithreading
@@ -134,8 +35,8 @@ with concurrent.futures.ThreadPoolExecutor() as executor:  # Crea un pool di thr
         ip = future_to_ip[future]  # Ottiene l'indirizzo IP associato al Future
         try: # Gestisce le eccezioni che possono verificarsi durante l'esecuzione del ping
             if future.result(): # Controlla se l'host è online o offline
-                print(f"{ip} is online")
+                print(f"{ip} online")
             else:
-                print(f"{ip} is offline")
+                print(f"{ip} offline")
         except Exception as e:
-            print(f"Error checking host {ip}: {str(e)}") # Stampa un messaggio di errore se si verifica un'eccezione durante il ping
+            print(f"Errore durante il controllo dell'host {ip}: {str(e)}") # Stampa un messaggio di errore se si verifica un'eccezione durante il ping
