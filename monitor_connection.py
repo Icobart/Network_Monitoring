@@ -16,7 +16,7 @@ def ping_host(ip):  # Definisce una funzione per eseguire un ping a un host
 
     try:  # Tenta di eseguire il comando ping
         #output = subprocess.run(' '.join(command), capture_output=True, timeout=5, shell=True)   Esegue il comando ping e cattura l'output
-        output = subprocess.run(command, capture_output=True, timeout=1)  # Esegue il comando ping e cattura l'output
+        output = subprocess.run(command, capture_output=True, timeout=5)  # Esegue il comando ping e cattura l'output
         return output.returncode == 0  # Ritorna True se il ping è riuscito, False altrimenti
     except subprocess.TimeoutExpired:
         print(f"Timeout scaduto durante il ping a {ip}")  # Stampa un messaggio di errore se il timeout scade
